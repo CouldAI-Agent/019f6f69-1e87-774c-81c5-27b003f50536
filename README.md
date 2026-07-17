@@ -1,17 +1,17 @@
 # HD BUSINESS ERP V1.0
 
-A corporate Enterprise Resource Planning (ERP) application with Role-Based Access Control (RBAC).
+一个带有基于角色访问控制 (RBAC) 的企业资源规划 (ERP) 应用程序。
 
-## Features
-- **Authentication**: Corporate login system.
-- **Role-Based Access Control (RBAC)**: Supports Admin and Operational User roles.
-  - *Admin*: Full access, user management, can delete invoices.
-  - *User*: Operational access, restricted permissions.
-- **User Management**: Add, edit, and view users (Admin only).
-- **Role Toggle**: Easily switch roles for testing in the navigation bar.
+## 功能特点
+- **身份验证**：企业登录系统。
+- **基于角色访问控制 (RBAC)**：支持管理员和操作用户角色。
+  - *管理员*：完全访问权限，用户管理，可删除发票。
+  - *用户*：操作访问权限，权限受限。
+- **用户管理**：添加、编辑和查看用户（仅限管理员）。
+- **角色切换**：在导航栏中轻松切换角色以进行测试。
 
-## Tech Stack
+## 技术栈
 - Flutter
 
-## CouldAI
-This app was generated with [CouldAI](https://could.ai), an AI app builder for cross-platform apps that turns prompts into real native iOS, Android, Web, and Desktop apps with autonomous AI agents that architect, build, test, deploy, and iterate production-ready applications.
+## 关于 CouldAI
+该应用由 [CouldAI](https://could.ai) 生成。CouldAI 是一个跨平台的人工智能应用构建器，能够将提示转化为真正的原生 iOS、Android、Web 和桌面应用。它拥有自主的 AI 代理，能够架构、构建、测试、部署和迭代生产就绪的应用程序。

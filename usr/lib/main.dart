@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter email and password')),
+        const SnackBar(content: Text('请输入用户名或电子邮箱和密码')),
       );
     }
   }
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'V1.0 Sign In',
+                  'V1.0 登录',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.grey),
                 ),
@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    labelText: 'Username or Email',
+                    labelText: '用户名或电子邮箱',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person),
                   ),
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
-                    labelText: 'Password',
+                    labelText: '密码',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
                   ),
@@ -131,11 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: const Color(0xFF0D47A1),
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('LOGIN'),
+                  child: const Text('登录'),
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Hint: Use "admin" in email for Admin role.',
+                  '提示：在邮箱中包含 "admin" 即可作为管理员登录。',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
@@ -160,13 +160,13 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text('控制台'),
         backgroundColor: const Color(0xFF0D47A1),
         foregroundColor: Colors.white,
         actions: [
           Row(
             children: [
-              const Text('Role: ', style: TextStyle(fontSize: 14)),
+              const Text('角色：', style: TextStyle(fontSize: 14)),
               DropdownButton<UserRole>(
                 value: authState.currentRole,
                 dropdownColor: const Color(0xFF0D47A1),
@@ -176,7 +176,7 @@ class HomeScreen extends StatelessWidget {
                 items: UserRole.values.map((role) {
                   return DropdownMenuItem(
                     value: role,
-                    child: Text(role.name.toUpperCase()),
+                    child: Text(role == UserRole.admin ? '管理员' : '用户'),
                   );
                 }).toList(),
                 onChanged: (role) {
@@ -188,7 +188,7 @@ class HomeScreen extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.logout),
-            tooltip: 'Logout',
+            tooltip: '退出登录',
             onPressed: () {
               authState.logout();
               Navigator.pushReplacementNamed(context, '/');
@@ -209,7 +209,7 @@ class HomeScreen extends StatelessWidget {
                   const Icon(Icons.business, color: Colors.white, size: 48),
                   const SizedBox(height: 16),
                   Text(
-                    isAdmin ? 'Admin User' : 'Standard User',
+                    isAdmin ? '管理员' : '普通用户',
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],
@@ -217,13 +217,13 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.dashboard),
-              title: const Text('Dashboard'),
+              title: const Text('控制台'),
               onTap: () => Navigator.pop(context),
             ),
             if (isAdmin)
               ListTile(
                 leading: const Icon(Icons.people),
-                title: const Text('User Management'),
+                title: const Text('用户管理'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/users');
@@ -232,11 +232,11 @@ class HomeScreen extends StatelessWidget {
             if (isAdmin)
               ListTile(
                 leading: const Icon(Icons.settings),
-                title: const Text('System Settings'),
+                title: const Text('系统设置'),
                 onTap: () {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Settings available for Admin only.')),
+                    const SnackBar(content: Text('仅管理员可访问设置。')),
                   );
                 },
               ),
@@ -249,7 +249,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Recent Invoices',
+              '近期发票',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
@@ -260,14 +260,14 @@ class HomeScreen extends StatelessWidget {
                   return Card(
                     child: ListTile(
                       leading: const CircleAvatar(child: Icon(Icons.receipt)),
-                      title: Text('Invoice #100${index + 1}'),
-                      subtitle: Text('Amount: \$${(index + 1) * 150}.00'),
+                      title: Text('发票 #100${index + 1}'),
+                      subtitle: Text('金额: \$${(index + 1) * 150}.00'),
                       trailing: isAdmin
                           ? IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Deleted Invoice #100${index + 1}')),
+                                  SnackBar(content: Text('已删除发票 #100${index + 1}')),
                                 );
                               },
                             )
@@ -296,8 +296,8 @@ class UserManagementScreen extends StatefulWidget {
 
 class _UserManagementScreenState extends State<UserManagementScreen> {
   final List<Map<String, String>> _users = [
-    {'name': 'Admin User', 'email': 'admin@hdbusiness.com', 'role': 'Admin'},
-    {'name': 'John Doe', 'email': 'john@hdbusiness.com', 'role': 'User'},
+    {'name': '管理员用户', 'email': 'admin@hdbusiness.com', 'role': '管理员'},
+    {'name': '张三', 'email': 'zhangsan@hdbusiness.com', 'role': '用户'},
   ];
 
   @override
@@ -305,16 +305,16 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
     // Double check access in case someone routes here directly
     if (authState.currentRole != UserRole.admin) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Access Denied')),
+        appBar: AppBar(title: const Text('拒绝访问')),
         body: const Center(
-          child: Text('You do not have permission to view this page.'),
+          child: Text('您没有权限查看此页面。'),
         ),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Management'),
+        title: const Text('用户管理'),
         backgroundColor: const Color(0xFF0D47A1),
         foregroundColor: Colors.white,
       ),
@@ -326,7 +326,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
           return Card(
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: user['role'] == 'Admin' ? Colors.deepPurple : Colors.blue,
+                backgroundColor: user['role'] == '管理员' ? Colors.deepPurple : Colors.blue,
                 child: Text(user['name']![0]),
               ),
               title: Text(user['name']!),
@@ -338,7 +338,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                     icon: const Icon(Icons.edit, color: Colors.blue),
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Edit ${user['name']}')),
+                        SnackBar(content: Text('编辑 ${user['name']}')),
                       );
                     },
                   ),
@@ -359,7 +359,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Add New User')),
+            const SnackBar(content: Text('添加新用户')),
           );
         },
         backgroundColor: const Color(0xFF0D47A1),
